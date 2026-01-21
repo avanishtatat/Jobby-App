@@ -1,0 +1,99 @@
+.navbar-container {
+  background-color: #272727;
+  height: 20vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.nav-logo {
+  width: 80px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.website-logo-link{
+  text-decoration: none;
+}
+
+.nav-link-icon-container {
+  list-style-type: none;
+  padding-left: 0%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+}
+
+.link-item {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-icon {
+  width: 30px;
+  height: 30px;
+  color: #f8fafc;
+}
+
+.nav-link-text-container {
+  display: none;
+}
+
+.logout-button {
+  display: none;
+}
+
+.logout-icon-btn {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.nav-text {
+  color: #ffffff;
+  font-family: 'Roboto';
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.logout-button {
+  width: 135px;
+  height: 40px;
+  background-color: #4f46e5;
+  color: #f8fafc;
+  font-family: 'Roboto';
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+}
+
+@media (min-width: 768px) {
+  .navbar-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  .nav-link-icon-container {
+    display: none;
+  }
+  .nav-link-text-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    list-style-type: none;
+    padding-left: 0%;
+  }
+  .logout-button {
+    display: inline;
+    align-self: center;
+  }
+  .nav-logo {
+    width: 120px;
+    height: 60px;
+  }
+}
