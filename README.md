@@ -1,116 +1,109 @@
-# 💼 Jobby App – Job Search Web Application
+# Jobby App
 
-🔗 **Live Demo:** https://avanishproj56.ccbp.tech/  
-📦 **GitHub Repository:** https://github.com/avanishtatat/Jobby-App
+A production-style React application for authenticated job discovery with multi-dimensional filtering, protected navigation, and resilient API-state handling.
 
-Jobby App is a modern **job search web application** built using **React JS**, where users can log in, browse jobs, apply multiple filters, and view detailed job information.  
-This project demonstrates real-world frontend concepts such as **authentication, protected routes, API integration, filters, and conditional rendering**.
+## Project Summary
 
----
+Jobby App enables users to log in, discover relevant jobs, and inspect detailed job information in a clean and responsive UI. The project demonstrates practical frontend engineering patterns commonly evaluated in interviews: route protection, token-based auth, filter composition, async state management, and failure recovery.
 
-## 📌 Project Overview
+## Key Features
 
-The Jobby App allows users to:
-- Authenticate securely using login credentials
-- Browse available jobs
-- Filter jobs by employment type and salary range
-- Search jobs using keywords
-- View detailed job descriptions
-- Access protected routes only after authentication
+- JWT-based authentication flow (login, session persistence, logout)
+- Protected routes for secure pages
+- Jobs listing with composed filters:
+  - Type of Employment (multi-select)
+  - Salary Range (single-select)
+  - Location (multi-select): Hyderabad, Bangalore, Chennai, Delhi, Mumbai
+  - Keyword Search
+- Filter composition behavior:
+  - Location filtering works together with Type of Employment and Salary Range
+  - Existing filters remain applied while toggling additional filters
+- Sticky UI enhancements:
+  - Sticky header across application routes using the shared Header component
+  - Sticky jobs sidebar for persistent access to filters while browsing
+- API state coverage:
+  - Loading, success, empty, and failure views
+  - Retry handling for profile and jobs requests
+- Job details page with skills, life-at-company section, and similar jobs
 
----
+## Interview-Focused Highlights
 
-## 🚀 Features
+- **Component architecture:** Clear separation of concerns (`Header`, `Jobs`, `Profile`, `JobCard`, `JobItemDetails`, `SimilarJobs`, `ProtectedRoute`)
+- **State modeling:** Dedicated state slices for API status, filters, and result sets
+- **Filter logic:** Controlled inputs + composed query/filter pipeline for predictable UX
+- **UX resilience:** Explicit rendering for async lifecycle states and API failures
+- **Routing discipline:** Guarded routes and user flow enforcement via redirects
 
-### 🔐 Authentication
-- Login using username and password
-- JWT-based authentication
-- Error messages shown for invalid credentials
-- Successful login redirects to Jobs page
+## Tech Stack
 
----
+- React (Class Components)
+- React Router DOM
+- JavaScript (ES6+)
+- CSS3
+- js-cookie
+- react-icons
+- react-loader-spinner
 
-### 🛡️ Protected Routes
-- Jobs and Job Details routes are protected
-- Unauthenticated users are redirected to Login
-- Logged-in users cannot access Login again
+## API Endpoints
 
----
+- `POST https://apis.ccbp.in/login`
+- `GET https://apis.ccbp.in/profile`
+- `GET https://apis.ccbp.in/jobs`
+- `GET https://apis.ccbp.in/jobs/:id`
 
-### 🧾 Jobs Page
-- Fetches jobs using secured APIs
-- Search jobs by keywords
-- Filter jobs by:
-  - Employment Type (Full Time, Part Time, Freelance, Internship)
-  - Salary Range
-- Loader shown while fetching data
-- Failure view and No Jobs view handled properly
+## Authentication (Demo Credentials)
 
----
+- Username: `rahul` | Password: `rahul@2021`
+- Username: `raja` | Password: `raja@2021`
 
-### 📄 Job Details Page
-- Displays detailed job information
-- Shows company details
-- Displays similar jobs
-- External link to company website
-- Loader and failure views implemented
+## Local Setup
 
----
+1. Clone the repository:
+   - `git clone https://github.com/avanishtatat/Jobby-App.git`
+2. Move into project directory:
+   - `cd Jobby-App`
+3. Install dependencies:
+   - `pnpm install`
+4. Start development server:
+   - `pnpm start`
 
-## 🔑 Demo Login Credentials
+If your environment uses npm instead of pnpm, use `npm install` and `npm start`.
 
-Use the following credentials to log in and explore the application:
+## Available Scripts
 
-### Users
-- username: rahul
-password: rahul@2021
-- username: raja
-password: raja@2021
+- `pnpm start` – Runs app in development mode
+- `pnpm test` – Runs test suite
+- `pnpm run build` – Builds production bundle
 
---- 
-
-
-> ⚠️ These credentials are for demo purposes only.
-
----
-
-## 🧰 Tech Stack
-
-- **Frontend:** React JS
-- **Routing:** React Router DOM
-- **Authentication:** JWT
-- **Styling:** CSS3
-- **Icons:** react-icons
-- **API Integration:** REST APIs
-- **Package Manager:** npm
-
----
-
-## 🔗 API Endpoints Used
-
-| Feature | Method | Endpoint |
-|-------|--------|----------|
-| Login | POST | https://apis.ccbp.in/login |
-| Jobs | GET | https://apis.ccbp.in/jobs |
-| Job Details | GET | https://apis.ccbp.in/jobs/:id |
-| Profile | GET | https://apis.ccbp.in/profile |
-
----
-
-## 📁 Folder Structure
+## Folder Structure (High Level)
 
 ```text
 src/
-│── components/
-│   ├── LoginForm
-│   ├── Jobs
-│   ├── JobItemDetails
-│   ├── FiltersGroup
-│   ├── Header
-│   ├── Profile
-│   ├── ProtectedRoute
-│   └── SimilarJobItem
-│
-│── App.js
-│── index.js
+  components/
+    Header/
+    Home/
+    Jobs/
+    JobCard/
+    JobItemDetails/
+    SimilarJobs/
+    Profile/
+    LoginForm/
+    ProtectedRoute/
+    NotFound/
+  App.js
+  index.js
 ```
+
+## What This Project Demonstrates
+
+- Building authenticated single-page applications
+- Managing multiple concurrent filters without breaking existing state
+- Designing robust UI for unreliable network conditions
+- Implementing maintainable component-level architecture suitable for scaling
+
+## Future Improvements
+
+- Migrate to functional components with hooks
+- Add unit/integration tests for filter composition and route guards
+- Add debounced search for reduced API calls
+- Add pagination/infinite scroll for larger datasets
