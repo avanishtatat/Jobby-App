@@ -1,6 +1,6 @@
-import { Component } from 'react'
+import {Component} from 'react'
 import Cookies from 'js-cookie'
-import { BsSearch } from 'react-icons/bs'
+import {BsSearch} from 'react-icons/bs'
 import Loader from 'react-loader-spinner'
 import Header from '../Header'
 import Profile from '../Profile'
@@ -54,11 +54,11 @@ const salaryRangesList = [
 ]
 
 const locationsList = [
-  { label: 'Hyderabad', locationId: 'HYDERABAD' },
-  { label: 'Bangalore', locationId: 'BANGALORE' },
-  { label: 'Chennai', locationId: 'CHENNAI' },
-  { label: 'Delhi', locationId: 'DELHI' },
-  { label: 'Mumbai', locationId: 'MUMBAI' },
+  {label: 'Hyderabad', locationId: 'HYDERABAD'},
+  {label: 'Bangalore', locationId: 'BANGALORE'},
+  {label: 'Chennai', locationId: 'CHENNAI'},
+  {label: 'Delhi', locationId: 'DELHI'},
+  {label: 'Mumbai', locationId: 'MUMBAI'},
 ]
 
 const jwtToken = Cookies.get('jwt_token')
@@ -81,7 +81,7 @@ class Jobs extends Component {
   }
 
   getProfile = async () => {
-    this.setState({ profileApiStatus: apiStatusConstants.inProgress })
+    this.setState({profileApiStatus: apiStatusConstants.inProgress})
     const profileApi = 'https://apis.ccbp.in/profile'
     const option = {
       method: 'GET',
@@ -103,7 +103,7 @@ class Jobs extends Component {
           profileApiStatus: apiStatusConstants.success,
         })
       } else {
-        this.setState({ profileApiStatus: apiStatusConstants.failure })
+        this.setState({profileApiStatus: apiStatusConstants.failure})
       }
     } catch (e) {
       console.log(e.message)
@@ -111,7 +111,7 @@ class Jobs extends Component {
   }
 
   applyLocationFilter = allJobs => {
-    const { locations } = this.state
+    const {locations} = this.state
     // console.log(locations)
     if (locations.length === 0) {
       this.setState({
@@ -130,8 +130,8 @@ class Jobs extends Component {
   }
 
   getJobs = async () => {
-    this.setState({ jobsApiStatus: apiStatusConstants.inProgress })
-    const { employmentType, minimumPackage, search } = this.state
+    this.setState({jobsApiStatus: apiStatusConstants.inProgress})
+    const {employmentType, minimumPackage, search} = this.state
     const employmentTypeString = employmentType.join(',')
     const jobApiUrl = `https://apis.ccbp.in/jobs?employment_type=${employmentTypeString}&minimum_package=${minimumPackage}&search=${search}`
     const option = {
@@ -147,19 +147,19 @@ class Jobs extends Component {
         const updatedData =
           data.jobs.length > 0
             ? data.jobs.map(eachJob => ({
-              companyLogoUrl: eachJob.company_logo_url,
-              employmentType: eachJob.employment_type,
-              id: eachJob.id,
-              jobDescription: eachJob.job_description,
-              location: eachJob.location,
-              packagePerAnnum: eachJob.package_per_annum,
-              rating: eachJob.rating,
-              title: eachJob.title,
-            }))
+                companyLogoUrl: eachJob.company_logo_url,
+                employmentType: eachJob.employment_type,
+                id: eachJob.id,
+                jobDescription: eachJob.job_description,
+                location: eachJob.location,
+                packagePerAnnum: eachJob.package_per_annum,
+                rating: eachJob.rating,
+                title: eachJob.title,
+              }))
             : []
         this.applyLocationFilter(updatedData)
       } else {
-        this.setState({ jobsApiStatus: apiStatusConstants.failure })
+        this.setState({jobsApiStatus: apiStatusConstants.failure})
       }
     } catch (e) {
       console.log(e.message)
@@ -183,7 +183,7 @@ class Jobs extends Component {
   )
 
   renderProfileSection = () => {
-    const { profileApiStatus, profileDetails } = this.state
+    const {profileApiStatus, profileDetails} = this.state
     switch (profileApiStatus) {
       case apiStatusConstants.success:
         return <Profile profileDetails={profileDetails} />
@@ -234,20 +234,20 @@ class Jobs extends Component {
   )
 
   renderJobsListCard = () => {
-    const { jobsList } = this.state
+    const {jobsList} = this.state
     return (
       <ul className="jobs-list-container">
         {jobsList.length > 0
           ? jobsList.map(eachJob => (
-            <JobCard key={eachJob.id} jobList={eachJob} />
-          ))
+              <JobCard key={eachJob.id} jobList={eachJob} />
+            ))
           : this.renderNoJobsView()}
       </ul>
     )
   }
 
   renderJobsList = () => {
-    const { jobsApiStatus } = this.state
+    const {jobsApiStatus} = this.state
     switch (jobsApiStatus) {
       case apiStatusConstants.failure:
         return this.renderJobsFailure()
@@ -261,7 +261,7 @@ class Jobs extends Component {
   }
 
   onChangeSearchInput = event => {
-    this.setState({ search: event.target.value })
+    this.setState({search: event.target.value})
   }
 
   onClickSearchIcon = () => {
@@ -269,11 +269,11 @@ class Jobs extends Component {
   }
 
   onChangeCheckbox = event => {
-    const { value, checked, name } = event.target
+    const {value, checked, name} = event.target
     // console.log('Name =>', name)
     if (checked) {
       this.setState(
-        prevState => ({ [name]: [...prevState[name], value] }),
+        prevState => ({[name]: [...prevState[name], value]}),
         this.getJobs,
       )
     } else {
@@ -287,11 +287,11 @@ class Jobs extends Component {
   }
 
   onChangeRadio = event => {
-    this.setState({ minimumPackage: event.target.value }, this.getJobs)
+    this.setState({minimumPackage: event.target.value}, this.getJobs)
   }
 
   render() {
-    const { search, employmentType, minimumPackage, locations } = this.state
+    const {search, employmentType, minimumPackage, locations} = this.state
     return (
       <div className="jobs-container">
         <Header />
@@ -328,7 +328,9 @@ class Jobs extends Component {
                       id={empType.employmentTypeId}
                       value={empType.employmentTypeId}
                       name="employmentType"
-                      checked={employmentType.includes(empType.employmentTypeId)}
+                      checked={employmentType.includes(
+                        empType.employmentTypeId,
+                      )}
                       onChange={this.onChangeCheckbox}
                     />
                     <label
