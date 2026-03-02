@@ -53,6 +53,14 @@ const salaryRangesList = [
   },
 ]
 
+const locationsList = [
+  {label: 'Hyderabad', locationId: 'HYDERABAD'},
+  {label: 'Bangalore', locationId: 'BANGALORE'},
+  {label: 'Chennai', locationId: 'CHENNAI'},
+  {label: 'Delhi', locationId: 'DELHI'},
+  {label: 'Mumbai', locationId: 'MUMBAI'},
+]
+
 const jwtToken = Cookies.get('jwt_token')
 
 class Jobs extends Component {
@@ -62,6 +70,7 @@ class Jobs extends Component {
     jobsApiStatus: apiStatusConstants.initial,
     employmentType: [],
     minimumPackage: '',
+    locations: [],
     search: '',
     jobsList: [],
   }
@@ -101,6 +110,25 @@ class Jobs extends Component {
     }
   }
 
+  applyLocationFilter = allJobs => {
+    const {locations} = this.state
+    // console.log(locations)
+    if (locations.length === 0) {
+      this.setState({
+        jobsList: allJobs,
+        jobsApiStatus: apiStatusConstants.success,
+      })
+    } else {
+      const filteredJobs = allJobs.filter(job =>
+        locations.includes(job.location),
+      )
+      this.setState({
+        jobsList: filteredJobs,
+        jobsApiStatus: apiStatusConstants.success,
+      })
+    }
+  }
+
   getJobs = async () => {
     this.setState({jobsApiStatus: apiStatusConstants.inProgress})
     const {employmentType, minimumPackage, search} = this.state
@@ -129,10 +157,7 @@ class Jobs extends Component {
                 title: eachJob.title,
               }))
             : []
-        this.setState({
-          jobsList: updatedData,
-          jobsApiStatus: apiStatusConstants.success,
-        })
+        this.applyLocationFilter(updatedData)
       } else {
         this.setState({jobsApiStatus: apiStatusConstants.failure})
       }
@@ -244,18 +269,17 @@ class Jobs extends Component {
   }
 
   onChangeCheckbox = event => {
-    const {value, checked} = event.target
+    const {value, checked, name} = event.target
+    // console.log('Name =>', name)
     if (checked) {
       this.setState(
-        prevState => ({employmentType: [...prevState.employmentType, value]}),
+        prevState => ({[name]: [...prevState[name], value]}),
         this.getJobs,
       )
     } else {
       this.setState(
         prevState => ({
-          employmentType: prevState.employmentType.filter(
-            empType => empType !== value,
-          ),
+          [name]: prevState[name].filter(each => each !== value),
         }),
         this.getJobs,
       )
@@ -272,24 +296,24 @@ class Jobs extends Component {
       <div className="jobs-container">
         <Header />
         <div className="jobs-content">
-          <div className="search-input-container sm-search-input-container">
-            <input
-              className="search-input"
-              type="search"
-              placeholder="Search"
-              value={search}
-              onChange={this.onChangeSearchInput}
-            />
-            <button
-              type="button"
-              data-testid="searchButton"
-              className="search-button"
-              onClick={this.onClickSearchIcon}
-            >
-              <BsSearch className="search-icon" />
-            </button>
-          </div>
           <div className="left-container">
+            <div className="search-input-container sm-search-input-container">
+              <input
+                className="search-input"
+                type="search"
+                placeholder="Search"
+                value={search}
+                onChange={this.onChangeSearchInput}
+              />
+              <button
+                type="button"
+                data-testid="searchButton"
+                className="search-button"
+                onClick={this.onClickSearchIcon}
+              >
+                <BsSearch className="search-icon" />
+              </button>
+            </div>
             <div className="profile-container">
               {this.renderProfileSection()}
             </div>
@@ -332,6 +356,24 @@ class Jobs extends Component {
                       className="label-text"
                     >
                       {salaryRange.label}
+                    </label>
+                  </li>
+                ))}
+              </ul>
+              <hr className="hr-line" />
+              <h1 className="filter-heading">Locations</h1>
+              <ul className="filter-lists">
+                {locationsList.map(location => (
+                  <li key={location.locationId} className="list">
+                    <input
+                      type="checkbox"
+                      id={location.locationId}
+                      value={location.label}
+                      name="locations"
+                      onChange={this.onChangeCheckbox}
+                    />
+                    <label htmlFor={location.locationId} className="label-text">
+                      {location.label}
                     </label>
                   </li>
                 ))}

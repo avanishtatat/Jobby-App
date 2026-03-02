@@ -27,12 +27,12 @@ const Header = props => {
       <ul className="nav-link-icon-container">
         <Link to="/" className="link-item">
           <li>
-            <IoMdHome className="nav-icon" />
+            <IoMdHome size={22} color="#f8fafc" />
           </li>
         </Link>
         <Link to="/jobs" className="link-item">
           <li>
-            <BsFillBriefcaseFill className="nav-icon" />
+            <BsFillBriefcaseFill size={22} color="#f8fafc" />
           </li>
         </Link>
 
@@ -42,7 +42,7 @@ const Header = props => {
             onClick={onClickLogout}
             className="logout-icon-btn"
           >
-            <FiLogOut className="nav-icon" />
+            <FiLogOut size={22} color="#f8fafc" />
           </button>
         </li>
       </ul>
